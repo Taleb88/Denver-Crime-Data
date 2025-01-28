@@ -29,9 +29,20 @@ print('\ndisplay columns of offense_codes.csv - ', time.time() - start_time, '\n
 # print crime_df rows
 print(crime_df)
 
-# column names to be in lowercase in offense_codes.csv
+# convert column names to lowercase format in offense_codes.csv
 offense_codes_df.columns = map(str.lower, offense_codes_df.columns)
-# print offense_codes_df rows
+
 print(offense_codes_df)
 
-print('\ncolumn names now in lowercase in offense_codes.csv - ', time.time() - start_time, '\n')
+merged_df = pd.merge(crime_df, offense_codes_df, on='offense_code')
+
+print(merged_df.sort_values(by='offense_type_name', ascending=True).head(30))
+
+offense_code_pivot_table_df = pd.pivot_table(merged_df, 
+                                             index='offense_type_name',
+                                             values='offense_category_name',
+                                             aggfunc='count')
+
+print(offense_code_pivot_table_df)
+
+offense_code_pivot_table_df.to_csv('offense_code_pivot_table.csv')
