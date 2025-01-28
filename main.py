@@ -50,3 +50,13 @@ multiple_victim_count_df.to_csv('multiple_victim_count.csv', index=False)
 
 #neighborhood pivot table
 print(crime_df['neighborhood_id'].unique()) #grabbing unique values first
+neighborhood_crime_stats_pivot_table_df = pd.pivot_table(crime_df,
+                                             index='neighborhood_id',
+                                             values='victim_count',
+                                             aggfunc='count')
+print('\n victim count per neighborhood', neighborhood_crime_stats_pivot_table_df)
+neighborhood_crime_stats_pivot_table_df.to_csv('neighborhood_crime_stats_pivot_table.csv')
+# utilizing a groupby to display results of crimes per neighborhood in terms of type and total count per type
+crime_description_per_neighborhood_df = crime_df.groupby(['neighborhood_id', 'offense_code', 'offense_type_id'])['victim_count'].sum()
+print(crime_description_per_neighborhood_df)
+crime_description_per_neighborhood_df.to_csv('crime_description_per_neighborhood.csv')
