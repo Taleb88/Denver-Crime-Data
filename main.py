@@ -60,3 +60,10 @@ neighborhood_crime_stats_pivot_table_df.to_csv('neighborhood_crime_stats_pivot_t
 crime_description_per_neighborhood_df = crime_df.groupby(['neighborhood_id', 'offense_code', 'offense_type_id'])['victim_count'].sum()
 print(crime_description_per_neighborhood_df)
 crime_description_per_neighborhood_df.to_csv('crime_description_per_neighborhood.csv')
+# top 5 most dangeerous neighborhoods in terms of crime rate
+neighborhood_crime_stats_top_5_pivot_table_df = neighborhood_crime_stats_pivot_table_df.sort_values(by='victim_count', ascending=False).head(5)
+print('\ntop 5 most dangerous neighborhoods: ',neighborhood_crime_stats_top_5_pivot_table_df)
+neighborhood_crime_stats_top_5_pivot_table_df.to_csv('neighborhood_crime_stats_top_5_pivot_table.csv')
+
+#charts outlying crime per neighborhood (top 5 only)
+import matplotlib.pyplot as plt
