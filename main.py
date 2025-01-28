@@ -49,3 +49,4 @@ print(multiple_victim_count_df.sort_values(by='reported_date', ascending=True))
 multiple_victim_count_df.to_csv('multiple_victim_count.csv', index=False)
 
 #neighborhood pivot table
+print(crime_df['neighborhood_id'].unique()) #grabbing unique values first
