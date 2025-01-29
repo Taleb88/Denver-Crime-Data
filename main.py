@@ -30,9 +30,13 @@ print('\ndisplay columns of offense_codes.csv - ', time.time() - start_time, '\n
 # print crime_df rows
 print(crime_df)
 
+crime_df = crime_df.fillna(0)
+crime_df.to_csv('crime.csv', index=False)
+
 # convert column names to lowercase format in offense_codes.csv
 offense_codes_df.columns = map(str.lower, offense_codes_df.columns)
 print(offense_codes_df)
+offense_codes_df.to_csv('offense_codes.csv', index=False)
 
 merged_df = pd.merge(crime_df, offense_codes_df, on='offense_code')
 print(merged_df.sort_values(by='offense_type_name', ascending=True).head(30))
