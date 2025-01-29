@@ -11,15 +11,21 @@ print('\nread csvs - ', time.time() - start_time,'\n')
 my_list = list(crime_df)
 index = 0
 for col_name in my_list:
-    print(index, col_name)
-    index += 1
+    try: 
+        print(index, col_name)
+        index += 1
+    except Exception as e:
+        print(f'{type(e)}')
 print('\ndisplay columns of crime.csv - ', time.time() - start_time, '\n')    
 
 my_list = list(offense_codes_df)
 index = 0
 for col_name in my_list:
-    print(index, col_name)
-    index += 1
+    try:         
+        print(index, col_name)
+        index += 1
+    except Exception as e:
+        print(f'{type(e)}')    
 print('\ndisplay columns of offense_codes.csv - ', time.time() - start_time, '\n')
 # print crime_df rows
 print(crime_df)
@@ -56,6 +62,7 @@ neighborhood_crime_stats_pivot_table_df = pd.pivot_table(crime_df,
                                              aggfunc='count')
 print('\n victim count per neighborhood', neighborhood_crime_stats_pivot_table_df)
 neighborhood_crime_stats_pivot_table_df.to_csv('neighborhood_crime_stats_pivot_table.csv')
+
 # utilizing a groupby to display results of crimes per neighborhood in terms of type and total count per type
 crime_description_per_neighborhood_df = crime_df.groupby(['neighborhood_id', 'offense_code', 'offense_type_id'])['victim_count'].sum()
 print(crime_description_per_neighborhood_df)
@@ -65,5 +72,26 @@ neighborhood_crime_stats_top_5_pivot_table_df = neighborhood_crime_stats_pivot_t
 print('\ntop 5 most dangerous neighborhoods: ',neighborhood_crime_stats_top_5_pivot_table_df)
 neighborhood_crime_stats_top_5_pivot_table_df.to_csv('neighborhood_crime_stats_top_5_pivot_table.csv')
 
-#charts outlying crime per neighborhood (top 5 only)
+#charts
 import matplotlib.pyplot as plt
+import csv
+
+open_file = open("neighborhood_crime_stats_top_5_pivot_table.csv","r")
+
+csv_file = csv.reader(open_file)
+next(csv_file, None)
+
+neighorhood_id = []
+victim_count = []
+
+for row in csv_file:
+    try: 
+        neighorhood_id.append(row[0])
+        victim_count.append(row[1])
+    except Exception as e:
+        print(f'{type(e)}')      
+
+plt.pie(victim_count, labels=neighorhood_id, autopct='%1.0f%%')
+plt.title('neighborhood crime stats - top 5 worst neighborhoods', fontsize=11, weight='bold') #2018-2022
+plt.axis('equal')
+plt.show()
