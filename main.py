@@ -96,6 +96,6 @@ for row in csv_file:
         print(f'{type(e)}')      
 
 plt.pie(victim_count, labels=neighorhood_id, autopct='%1.0f%%')
-plt.title('neighborhood crime stats - top 5 worst neighborhoods', fontsize=11, weight='bold') #2018-2022
+plt.title('neighborhood crime stats - top 5 worst neighborhoods', fontsize=13, weight='bold') #2018-2022
 plt.axis('equal')
 plt.show()

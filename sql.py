@@ -60,7 +60,7 @@ ingest_data = '''COPY crime(
                 is_crime,
                 is_traffic,
                 victim_count)
-                FROM 
+                FROM '***FULL FILE PATH GOES HERE***'
                 DELIMITER ','
                 CSV HEADER;'''
 
